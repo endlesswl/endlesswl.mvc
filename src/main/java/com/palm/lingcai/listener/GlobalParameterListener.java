@@ -35,10 +35,6 @@ public class GlobalParameterListener implements ServletContextListener
 		application.setAttribute("lzzURl", Conf.get("lzz.url"));
 		application.setAttribute("lzzUrL", Conf.get("lzz.url"));
 		
-        //		application.setAttribute("ctx", getContextPath(application));
-		
-		//        application.setAttribute("clientUrl", Conf.get("client.domain"));
-		//        application.setAttribute("htmlUrl", Conf.get("html.url"));
 		contextPath = application.getRealPath("/");
 		if (contextPath.endsWith("/"))
 		{
