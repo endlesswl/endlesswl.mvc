@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.palm.lingcai.dao.futian.FutianDealerInfoDao">
+
+	<resultMap id="resultMap" type="com.palm.lingcai.entity.futian.FutianDealerInfo">
+        <result property="id" column="id"/>
+        <result property="dealerName" column="dealer_name"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="clientCity" column="client_city"/>
+        <result property="tel" column="tel"/>
+        <result property="address" column="address"/>
+        <result property="codeUrl" column="code_url"/>
+        <result property="createTime" column="create_time"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		id,dealer_name,province,city,client_city,tel,address,code_url,create_time
+	</sql>
+	
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="get" parameterType="Integer" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_dealer_info
+		WHERE id=#{id}
+	</select>
+	
+
+	<!-- 查询用户, 不分页 -->
+	<select id="search" parameterType="map" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_dealer_info
+		<where>
+	       <if test="dealerName != null and dealerName != ''">
+				AND dealer_name = #{dealerName}
+		   </if>
+	       <if test="province != null and province != ''">
+				AND province = #{province}
+		   </if>
+	       <if test="city != null and city != ''">
+				AND city = #{city}
+		   </if>
+	       <if test="clientCity != null and clientCity != ''">
+				AND client_city = #{clientCity}
+		   </if>
+	       <if test="tel != null and tel != ''">
+				AND tel = #{tel}
+		   </if>
+	       <if test="address != null and address != ''">
+				AND address = #{address}
+		   </if>
+	       <if test="codeUrl != null and codeUrl != ''">
+				AND code_url = #{codeUrl}
+		   </if>
+	       <if test="createTime != null and createTime != ''">
+				AND create_time = #{createTime}
+		   </if>
+		</where>
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="searchPage" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_dealer_info
+		<where>
+	       <if test="searchFields.dealerName != null and searchFields.dealerName != ''">
+				AND dealer_name = #{searchFields.dealerName}
+			</if>
+	       <if test="searchFields.province != null and searchFields.province != ''">
+				AND province = #{searchFields.province}
+			</if>
+	       <if test="searchFields.city != null and searchFields.city != ''">
+				AND city = #{searchFields.city}
+			</if>
+	       <if test="searchFields.clientCity != null and searchFields.clientCity != ''">
+				AND client_city = #{searchFields.clientCity}
+			</if>
+	       <if test="searchFields.tel != null and searchFields.tel != ''">
+				AND tel = #{searchFields.tel}
+			</if>
+	       <if test="searchFields.address != null and searchFields.address != ''">
+				AND address = #{searchFields.address}
+			</if>
+	       <if test="searchFields.codeUrl != null and searchFields.codeUrl != ''">
+				AND code_url = #{searchFields.codeUrl}
+			</if>
+	       <if test="searchFields.createTime != null and searchFields.createTime != ''">
+				AND create_time = #{searchFields.createTime}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="insert" parameterType="FutianDealerInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_futian_dealer_info (
+        	dealer_name,
+        	province,
+        	city,
+        	client_city,
+        	tel,
+        	address,
+        	code_url,
+        	create_time
+		) VALUES (
+        	#{dealerName},
+        	#{province},
+        	#{city},
+        	#{clientCity},
+        	#{tel},
+        	#{address},
+        	#{codeUrl},
+        	#{createTime}
+		)
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" >
+        UPDATE t_futian_dealer_info
+		<set>
+			<if test="dealerName != null and dealerName != ''">
+				dealer_name = #{dealerName},
+			</if>
+			<if test="province != null and province != ''">
+				province = #{province},
+			</if>
+			<if test="city != null and city != ''">
+				city = #{city},
+			</if>
+			<if test="clientCity != null and clientCity != ''">
+				client_city = #{clientCity},
+			</if>
+			<if test="tel != null and tel != ''">
+				tel = #{tel},
+			</if>
+			<if test="address != null and address != ''">
+				address = #{address},
+			</if>
+			<if test="codeUrl != null and codeUrl != ''">
+				code_url = #{codeUrl},
+			</if>
+			<if test="createTime != null and createTime != ''">
+				create_time = #{createTime}
+			</if>
+		</set>
+        WHERE 
+	        id = #{id}
+	</update>
+	
+	<!-- 删除用户 -->
+	<delete id="delete" parameterType="Integer">
+	     DELETE FROM t_futian_dealer_info WHERE id=#{id}
+	</delete>
+</mapper> 

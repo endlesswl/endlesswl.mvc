@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.palm.lingcai.dao.futian.FutianUserImgDao">
+
+	<resultMap id="resultMap" type="com.palm.lingcai.entity.futian.FutianUserImg">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="dealerId" column="dealer_id"/>
+        <result property="channelId" column="channel_id"/>
+        <result property="ifUse" column="if_use"/>
+        <result property="img" column="img"/>
+        <result property="createTime" column="create_time"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		id,user_id,dealer_id,channel_id,if_use,img,create_time
+	</sql>
+	
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="get" parameterType="Integer" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_user_img
+		WHERE id=#{id}
+	</select>
+	
+
+	<!-- 查询用户, 不分页 -->
+	<select id="search" parameterType="map" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_user_img
+		<where>
+	       <if test="userId != null and userId != ''">
+				AND user_id = #{userId}
+		   </if>
+	       <if test="dealerId != null and dealerId != ''">
+				AND dealer_id = #{dealerId}
+		   </if>
+	       <if test="channelId != null and channelId != ''">
+				AND channel_id = #{channelId}
+		   </if>
+	       <if test="ifUse != null and ifUse != ''">
+				AND if_use = #{ifUse}
+		   </if>
+	       <if test="img != null and img != ''">
+				AND img = #{img}
+		   </if>
+	       <if test="createTime != null and createTime != ''">
+				AND create_time = #{createTime}
+		   </if>
+		</where>
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="searchPage" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_user_img
+		<where>
+	       <if test="searchFields.userId != null and searchFields.userId != ''">
+				AND user_id = #{searchFields.userId}
+			</if>
+	       <if test="searchFields.dealerId != null and searchFields.dealerId != ''">
+				AND dealer_id = #{searchFields.dealerId}
+			</if>
+	       <if test="searchFields.channelId != null and searchFields.channelId != ''">
+				AND channel_id = #{searchFields.channelId}
+			</if>
+	       <if test="searchFields.ifUse != null and searchFields.ifUse != ''">
+				AND if_use = #{searchFields.ifUse}
+			</if>
+	       <if test="searchFields.img != null and searchFields.img != ''">
+				AND img = #{searchFields.img}
+			</if>
+	       <if test="searchFields.createTime != null and searchFields.createTime != ''">
+				AND create_time = #{searchFields.createTime}
+			</if>
+			<if test="searchFields.stime != null and searchFields.stime != ''">
+				AND create_time > #{searchFields.stime}
+			</if>
+			<if test="searchFields.etime != null and searchFields.etime != ''">
+				<![CDATA[
+				AND create_time < #{searchFields.etime}
+				]]>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="insert" parameterType="FutianUserImg" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_futian_user_img (
+        	user_id,
+        	dealer_id,
+        	channel_id,
+        	if_use,
+        	img,
+        	create_time
+		) VALUES (
+        	#{userId},
+        	#{dealerId},
+        	#{channelId},
+        	#{ifUse},
+        	#{img},
+        	#{createTime}
+		)
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" >
+        UPDATE t_futian_user_img
+		<set>
+			<if test="userId != null and userId != ''">
+				user_id = #{userId},
+			</if>
+			<if test="dealerId != null and dealerId != ''">
+				dealer_id = #{dealerId},
+			</if>
+			<if test="channelId != null and channelId != ''">
+				channel_id = #{channelId},
+			</if>
+			<if test="ifUse != null and ifUse != ''">
+				if_use = #{ifUse},
+			</if>
+			<if test="img != null and img != ''">
+				img = #{img},
+			</if>
+			<if test="createTime != null and createTime != ''">
+				create_time = #{createTime}
+			</if>
+		</set>
+        WHERE 
+	        id = #{id}
+	</update>
+	
+	<!-- 删除用户 -->
+	<delete id="delete" parameterType="Integer">
+	     DELETE FROM t_futian_user_img WHERE id=#{id}
+	</delete>
+
+	<!-- 管理员查看用户图片列表 -->
+	<select id="adminImgList" resultType="map">
+		SELECT tfui.img as img, tfu.uname as uname, tfu.mobile as mobile, tfdi.dealer_name as dealerName, tfcu.channel_name as channelName, tfui.create_time as createTime
+		from t_futian_user_img tfui
+		left join t_futian_dealer_info tfdi on tfui.dealer_id = tfdi.id
+		left join t_futian_user_info tfu on tfu.id = tfui.user_id
+		left join t_futian_channel_user tfcu on tfcu.id = tfui.channel_id;
+	</select>
+</mapper> 

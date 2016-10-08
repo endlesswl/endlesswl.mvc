@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.palm.lingcai.dao.futian.FutianUserInfoDao">
+
+	<resultMap id="resultMap" type="com.palm.lingcai.entity.futian.FutianUserInfo">
+        <result property="id" column="id"/>
+        <result property="uname" column="uname"/>
+        <result property="upwd" column="upwd"/>
+        <result property="mobile" column="mobile"/>
+        <result property="tel" column="tel"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="carType" column="car_type"/>
+        <result property="brand" column="brand"/>
+        <result property="carModel" column="car_model"/>
+        <result property="dealerId" column="dealer_id"/>
+        <result property="channelId" column="channel_id"/>
+        <result property="createTime" column="create_time"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		id,uname,upwd,mobile,tel,province,city,car_type,brand,car_model,dealer_id,channel_id,create_time
+	</sql>
+	
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="get" parameterType="Integer" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_user_info
+		WHERE id=#{id}
+	</select>
+	
+
+	<!-- 查询用户, 不分页 -->
+	<select id="search" parameterType="map" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_user_info
+		<where>
+	       <if test="uname != null and uname != ''">
+				AND uname = #{uname}
+		   </if>
+	       <if test="upwd != null and upwd != ''">
+				AND upwd = #{upwd}
+		   </if>
+	       <if test="mobile != null and mobile != ''">
+				AND mobile = #{mobile}
+		   </if>
+	       <if test="tel != null and tel != ''">
+				AND tel = #{tel}
+		   </if>
+	       <if test="province != null and province != ''">
+				AND province = #{province}
+		   </if>
+	       <if test="city != null and city != ''">
+				AND city = #{city}
+		   </if>
+	       <if test="carType != null and carType != ''">
+				AND car_type = #{carType}
+		   </if>
+	       <if test="brand != null and brand != ''">
+				AND brand = #{brand}
+		   </if>
+	       <if test="carModel != null and carModel != ''">
+				AND car_model = #{carModel}
+		   </if>
+	       <if test="dealerId != null and dealerId != ''">
+				AND dealer_id = #{dealerId}
+		   </if>
+	       <if test="channelId != null and channelId != ''">
+				AND channel_id = #{channelId}
+		   </if>
+	       <if test="createTime != null and createTime != ''">
+				AND create_time = #{createTime}
+		   </if>
+		</where>
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="searchPage" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_user_info
+		<where>
+	       <if test="searchFields.uname != null and searchFields.uname != ''">
+				AND uname = #{searchFields.uname}
+			</if>
+	       <if test="searchFields.upwd != null and searchFields.upwd != ''">
+				AND upwd = #{searchFields.upwd}
+			</if>
+	       <if test="searchFields.mobile != null and searchFields.mobile != ''">
+				AND mobile = #{searchFields.mobile}
+			</if>
+	       <if test="searchFields.tel != null and searchFields.tel != ''">
+				AND tel = #{searchFields.tel}
+			</if>
+	       <if test="searchFields.province != null and searchFields.province != ''">
+				AND province = #{searchFields.province}
+			</if>
+	       <if test="searchFields.city != null and searchFields.city != ''">
+				AND city = #{searchFields.city}
+			</if>
+	       <if test="searchFields.carType != null and searchFields.carType != ''">
+				AND car_type = #{searchFields.carType}
+			</if>
+	       <if test="searchFields.brand != null and searchFields.brand != ''">
+				AND brand = #{searchFields.brand}
+			</if>
+	       <if test="searchFields.carModel != null and searchFields.carModel != ''">
+				AND car_model = #{searchFields.carModel}
+			</if>
+	       <if test="searchFields.dealerId != null and searchFields.dealerId != ''">
+				AND dealer_id = #{searchFields.dealerId}
+			</if>
+	       <if test="searchFields.channelId != null and searchFields.channelId != ''">
+				AND channel_id = #{searchFields.channelId}
+			</if>
+	       <if test="searchFields.createTime != null and searchFields.createTime != ''">
+				AND create_time = #{searchFields.createTime}
+			</if>
+			<if test="searchFields.stime != null and searchFields.stime != ''">
+				AND create_time > #{searchFields.stime}
+			</if>
+			<if test="searchFields.etime != null and searchFields.etime != ''">
+				<![CDATA[
+				AND create_time < #{searchFields.etime}
+				]]>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="insert" parameterType="FutianUserInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_futian_user_info (
+        	uname,
+        	upwd,
+        	mobile,
+        	tel,
+        	province,
+        	city,
+        	car_type,
+        	brand,
+        	car_model,
+        	dealer_id,
+        	channel_id,
+        	create_time
+		) VALUES (
+        	#{uname},
+        	#{upwd},
+        	#{mobile},
+        	#{tel},
+        	#{province},
+        	#{city},
+        	#{carType},
+        	#{brand},
+        	#{carModel},
+        	#{dealerId},
+        	#{channelId},
+        	#{createTime}
+		)
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" >
+        UPDATE t_futian_user_info
+		<set>
+			<if test="uname != null and uname != ''">
+				uname = #{uname},
+			</if>
+			<if test="upwd != null and upwd != ''">
+				upwd = #{upwd},
+			</if>
+			<if test="mobile != null and mobile != ''">
+				mobile = #{mobile},
+			</if>
+			<if test="tel != null and tel != ''">
+				tel = #{tel},
+			</if>
+			<if test="province != null and province != ''">
+				province = #{province},
+			</if>
+			<if test="city != null and city != ''">
+				city = #{city},
+			</if>
+			<if test="carType != null and carType != ''">
+				car_type = #{carType},
+			</if>
+			<if test="brand != null and brand != ''">
+				brand = #{brand},
+			</if>
+			<if test="carModel != null and carModel != ''">
+				car_model = #{carModel},
+			</if>
+			<if test="dealerId != null and dealerId != ''">
+				dealer_id = #{dealerId},
+			</if>
+			<if test="channelId != null and channelId != ''">
+				channel_id = #{channelId},
+			</if>
+			<if test="createTime != null and createTime != ''">
+				create_time = #{createTime}
+			</if>
+		</set>
+        WHERE 
+	        id = #{id}
+	</update>
+	
+	<!-- 删除用户 -->
+	<delete id="delete" parameterType="Integer">
+	     DELETE FROM t_futian_user_info WHERE id=#{id}
+	</delete>
+
+	<!-- 查询所有的报名用户信息 -->
+	<select id="adminList" resultType="map">
+		select tfi.uname as uname, tfi.mobile as mobile, tfi.brand as brand, tfi.car_type as carType, tfc.city as city, tfp.province as province, tfdi.dealer_name as dealerName, tfi.create_time as createTime
+		<!--SELECT tfi.uname, tfi.mobile, tfi.car_model, tfi.car_type, tfc.city, tfp.province, tfdi.dealer_name, tfi.create_time-->
+		from t_futian_user_info tfi
+		left join t_futian_city tfc on tfi.city=tfc.id
+		left join t_futian_dealer_info tfdi on tfi.dealer_id = tfdi.id
+		left join t_futian_province tfp on tfi.province = tfp.id
+	</select>
+</mapper> 

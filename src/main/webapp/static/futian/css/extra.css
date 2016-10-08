@@ -1,0 +1,337 @@
+/*index样式开始*/
+
+.indexbody{
+	width: 100%;
+    overflow: hidden;
+    background-color: #4c4c4c;
+    background: url(../images/indexbg.jpg) center center no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    background-attachment: fixed;
+}
+.footer{
+	position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 52px;
+    background: #eeeeee;
+
+}
+.footer ul li{
+	float: left;
+	
+	box-sizing: border-box;
+	width:33.33%;
+	text-align: center;
+	height: 52px;
+}
+.footer ul li:nth-of-type(1),.footer ul li:nth-of-type(2){
+	border-right: 1px solid #4c4c4c;
+}
+.footer ul li a{
+	display: block;
+}
+.blueli{
+	background-color: #0072bc;
+}
+
+.footer ul li a p{
+	color: #414141;
+	font-size: 12px;
+}
+.footer ul li.blueli p{
+	color: #f7f7f7;
+	font-size: 12px;
+}
+.footer ul li a div img{
+	width: 20px;
+	height: 20px;
+	margin-top: 8px;
+}
+/*singnup.html样式开始*/
+.center{
+    text-align: center;
+}
+.center img{
+    width: 60%;
+    height: auto;
+   
+}
+.rule{
+    color: #ffffff;
+    font-family: "黑体";
+    font-size: 12px;
+}
+.rule p{
+    line-height: 18px;
+}
+.tiprule{
+    color: #cccccc;
+}
+.leftimg{
+     margin-top: 2%;
+}
+.leftimg img{
+    width: 50%;
+    height: auto;
+}
+.indexcon{
+    padding: 0 10%;
+    margin-bottom: 72px;
+    margin-top: 8px;
+}
+.imgthree{
+    margin-bottom: 4px;
+    text-align: center;
+}
+.imgthree img{
+    width: 80%;
+}
+.signbody{
+	width: 100%;
+    overflow: hidden;
+    background-color: #4c4c4c;
+    background: url(../images/signbg.jpg) center center no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    background-attachment: fixed;
+    overflow: scroll;
+}
+.imggai{
+    text-align: center;
+    margin-top: 50px;
+}
+.imggai img{
+    height: 82px;
+    width: auto;
+}
+.formlist{
+	padding: 0 10% 50px 10%;
+	margin-top: 10px;
+}
+.formlist p input{
+	width: 100%;
+    height: 18px;
+    padding: 10px 0;
+    border: 1px solid #d5d5d5;
+    border-radius: 4px;
+    font-size: 18px;
+    color: #929292;
+    text-indent: 17px;
+    margin-bottom: 12px;
+}
+.formlist select{
+	width: 100%;
+    height: 38px;
+    background-color: #ffffff;
+    line-height: 38px;
+    border: 1px solid #d5d5d5;
+    border-radius: 4px;
+    font-size: 18px;
+    color: #929292;
+    text-indent: 17px;
+    margin-bottom: 12px;
+    vertical-align: middle;
+    padding-right: 0;
+    -webkit-appearance: none;
+    background: url(../images/sodown.png) #ffffff 95% center no-repeat;
+    background-size: 15px 8px;
+}
+.selectshot select{
+	float: left;
+	width: 49%;
+}
+.selectshot select:nth-of-type(2){
+	margin-left: 2%;
+}
+.textp{
+ color: #ffffff;
+ font-size: 16px;
+ margin-bottom: 10px;
+}
+.tipp{
+color: #ef0909;
+ font-size: 14px;
+  margin-bottom: 10px;
+}
+.surebtn{
+	background: #048de5;
+    border-radius: 4px;
+    display: block;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    color: #fff;
+    border: none;
+    width: 100%;
+    margin-bottom: 20px;
+}
+/*upload.html页面样式开始*/
+.uploadbody{
+	width: 100%;
+    overflow: hidden;
+    background-color: #4c4c4c;
+    background: url(../images/uploadbg.jpg) center center no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    background-attachment: fixed;
+    overflow: scroll;
+}
+.loadcontent{
+	padding: 50px 10%;
+}
+.content1{
+	color: #ffffff;
+	font-size: 16px;
+}
+.content1 img{
+	width: 17px;
+	height: auto;
+	vertical-align: middle;
+	margin-right: 6px;
+}
+.content2{
+	width: 100%;
+	height: 145px;
+	border:2px solid #ffffff;
+	border-radius: 4px;
+	margin-top: 20px;
+	overflow: hidden;
+	text-align: center;
+	box-sizing: border-box;
+}
+.content2 img{
+	height: 128px;
+	width:172px;
+	margin-top: 8px; 
+	
+}
+.content3{
+	margin-top: 20px;
+	border-radius: 4px;
+	width: 100%;
+	height: 145px;
+	border:2px solid #ffffff;
+	background-color: #eeeeee;
+	overflow: hidden;
+	position: relative;
+	box-sizing: border-box;
+	margin-bottom: 10px;
+}
+.content3 span{
+	display: block;
+    background: url(../images/add.png) center center no-repeat;
+    background-size: 65px 94px;
+    width: 100%;
+	height: 145px;
+    overflow: hidden;
+
+}
+.content3 input{
+	background: none;
+    height: 1000px;
+    width: 1780px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-indent: -999999px;
+    cursor: pointer;
+    opacity: 0;
+}
+/*提交成果页面开始*/
+.successtip{
+	padding: 40% 15%;
+}
+.successdiv{
+	border-radius: 4px;
+	width: 100%;
+	height: 145px;
+	border:2px solid #ffffff;
+	background-color: #eeeeee;
+	overflow: hidden;
+	text-align: center;
+}
+.successdiv img{
+	width: 55px;
+	height: 55px;
+	margin-top: 25px;
+}
+.successdiv p{
+	color: #414141;
+	font-size: 18px;
+	height: 24px;
+	line-height: 24px;
+	margin-top: 10px;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+      color: #929292;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+      color: #929292;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+      color: #929292;
+      opacity: 1;
+    }
+    :-moz-placeholder { /* Firefox 4 - 18 */
+      color: #929292;
+      opacity: 1;
+    }
+.popupceng{
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 33;
+    overflow: hidden;
+   /* display: none;*/
+    opacity: 0.5;
+}
+.popupcont{
+    position: absolute;
+    top: 200px;
+    left: 0;
+    z-index: 35;
+    width: 100%;
+    text-align: center;
+}
+.popupcont p{
+    color: #ffffff;
+    text-align: center;
+    top: 100px;
+}
+.popcenter{
+    text-align: center;
+}
+
+.carload{
+    display:none;
+}
+
+.Vdialog{padding:5px 10px; width:214px;line-height:24px;margin:0px auto;display:none;background-color:#000;color:#fff;text-align:center;opacity:0.6;position:fixed;z-index:10000;border-radius:5px;-webkit-border-radius:5px;}
+.Vdialog_share {
+    padding: 20px 10px;
+    width: 214px;
+    line-height: 24px;
+    margin: 0px auto;
+    display: none;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    opacity: 1;
+    position: fixed;
+    z-index: 10002;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.addbgsp{
+    width:100%;
+    height:100%;
+    background: url(../images/signbg.jpg) center center no-repeat;
+    background-size: 100% 100%;
+}

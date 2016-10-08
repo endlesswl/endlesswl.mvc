@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.palm.lingcai.dao.futian.FutianChannelUserDao">
+
+	<resultMap id="resultMap" type="com.palm.lingcai.entity.futian.FutianChannelUser">
+        <result property="id" column="id"/>
+        <result property="channelName" column="channel_name"/>
+        <result property="content" column="content"/>
+        <result property="codeUrl" column="code_url"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		id,channel_name,content,code_url
+	</sql>
+	
+	<!-- 获取用户: 输出直接映射到对象 -->
+	<select id="get" parameterType="Integer" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_channel_user
+		WHERE id=#{id}
+	</select>
+	
+
+	<!-- 查询用户, 不分页 -->
+	<select id="search" parameterType="map" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_channel_user
+		<where>
+	       <if test="channelName != null and channelName != ''">
+				AND channel_name = #{channelName}
+		   </if>
+	       <if test="content != null and content != ''">
+				AND content = #{content}
+		   </if>
+	       <if test="codeUrl != null and codeUrl != ''">
+				AND code_url = #{codeUrl}
+		   </if>
+		</where>
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="searchPage" resultMap="resultMap">
+		SELECT <include refid="columns" />
+		FROM t_futian_channel_user
+		<where>
+	       <if test="searchFields.channelName != null and searchFields.channelName != ''">
+				AND channel_name = #{searchFields.channelName}
+			</if>
+	       <if test="searchFields.content != null and searchFields.content != ''">
+				AND content = #{searchFields.content}
+			</if>
+	       <if test="searchFields.codeUrl != null and searchFields.codeUrl != ''">
+				AND code_url = #{searchFields.codeUrl}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="insert" parameterType="FutianChannelUser" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_futian_channel_user (
+        	channel_name,
+        	content,
+        	code_url
+		) VALUES (
+        	#{channelName},
+        	#{content},
+        	#{codeUrl}
+		)
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" >
+        UPDATE t_futian_channel_user
+		<set>
+			<if test="channelName != null and channelName != ''">
+				channel_name = #{channelName},
+			</if>
+			<if test="content != null and content != ''">
+				content = #{content},
+			</if>
+			<if test="codeUrl != null and codeUrl != ''">
+				code_url = #{codeUrl}
+			</if>
+		</set>
+        WHERE 
+	        id = #{id}
+	</update>
+	
+	<!-- 删除用户 -->
+	<delete id="delete" parameterType="Integer">
+	     DELETE FROM t_futian_channel_user WHERE id=#{id}
+	</delete>
+</mapper> 
