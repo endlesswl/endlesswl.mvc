@@ -42,7 +42,8 @@
                     }
                 },
                 error: function (data, status, e) {
-                    Util.showErrorMessage("上传失败");
+                    $(".carload").hide();
+                    Util.showErrorMessage("上传失败,请重新上传！");
                 }
             });
         }
