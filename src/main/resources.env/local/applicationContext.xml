@@ -30,19 +30,24 @@
     <!-- 数据源配置, 使用Tomcat JDBC连接池 -->
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
               destroy-method="close">
-            <!-- Connection Info -->
-            <property name="driverClassName" value="${jdbc.driver}"/>
-            <property name="url" value="${jdbc.url}"/>
-            <property name="username" value="${jdbc.username}"/>
-            <property name="password" value="${jdbc.password}"/>
+        <!-- Connection Info -->
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
 
-            <!-- Connection Pooling Info -->
-            <property name="maxActive" value="${jdbc.pool.maxActive}"/>
-            <property name="maxIdle" value="${jdbc.pool.maxIdle}"/>
-            <property name="defaultAutoCommit" value="false"/>
-            <!-- 连接Idle一个小时后超时 -->
-            <property name="timeBetweenEvictionRunsMillis" value="3600000"/>
-            <property name="minEvictableIdleTimeMillis" value="3600000"/>
+        <!-- Connection Pooling Info -->
+        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+        <property name="maxIdle" value="${jdbc.pool.maxIdle}"/>
+        <property name="defaultAutoCommit" value="false"/>
+        <!-- 连接Idle一个小时后超时 -->
+        <property name="timeBetweenEvictionRunsMillis" value="3600000"/>
+        <property name="minEvictableIdleTimeMillis" value="3600000"/>
+        <property name="testOnBorrow" value="true" />
+        <property name="testWhileIdle" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="validationQuery" value="select 1" />
+        <property name="validationInterval" value="30000" />
     </bean>
     
     <!-- 配置MyBatis分页： -->
@@ -88,5 +93,15 @@
     
     <!-- JSR303 Validator定义 -->
     <bean id="validator"  class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <!-- 定时任务 -->
+    <task:annotation-driven /> <!-- 定时器开关-->
+
+    <!-- 活动定时   不需要 -->
+    <bean id="testJdbcConn" class="com.palm.lingcai.service.jobs.TestJdbcConn"></bean>
+    <task:scheduled-tasks>
+        <task:scheduled ref="testJdbcConn" method="initTestJdbc" cron="0 0 */1 * * ?"/>     <!--  每隔1小时 -->
+    </task:scheduled-tasks>
+
 </beans>
 
