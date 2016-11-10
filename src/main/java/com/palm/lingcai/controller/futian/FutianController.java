@@ -7,6 +7,7 @@ import com.palm.lingcai.util.CookieHelper;
 import com.palm.lingcai.util.LcbJson;
 
 
+import com.palm.lingcai.util.ReadExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -111,10 +113,13 @@ public class FutianController {
      */
     @ResponseBody
     @RequestMapping("getDealer.json")
-    public String getDealer(@RequestParam("cityId") Integer cityId){
+    public String getDealer(@RequestParam("cityId") Integer cityId, @RequestParam(value = "carType", defaultValue = "") String carType){
         Map<String, Object> searchParam = Maps.newHashMap();
         Map<String, Object> reMap = Maps.newHashMap();
         searchParam.put("city", cityId);
+        if(!StringUtils.isEmpty(carType)){
+            searchParam.put("carType", carType+";");
+        }
         List<FutianDealerInfo> fdis = futianDealerInfoService.search(searchParam);
         reMap.put("list", fdis);
         return LcbJson.toJSONString(reMap);
@@ -216,5 +221,84 @@ public class FutianController {
         List<Map<String, Object>> list = futianUserImgService.adminImgList();
         model.addAttribute("list", list);
         return "futian/adminImgList";
+    }
+
+    /**
+     * 经销商信息初始化使用
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("initDealerInfo")
+    public String initDealerInfo(){
+        List<Map<String, Object>> list = null;
+        Map<Integer, String> param = Maps.newHashMap();
+        param.put(0, "province");
+        param.put(1, "city");
+        param.put(2, "dealerName");
+        param.put(4, "clientCity");
+        param.put(5, "address");
+        param.put(6, "tel");
+        String carType = "时代";
+        try {
+            list = new ReadExcelUtil().readExcel("/Users/nzhmac/时代瑞沃经销商（金刚驳运）.xls", param);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (list != null) {
+            for(Map<String, Object> map: list){
+                if(map.get("province").toString().equals("省份")){
+                    continue;
+                }
+                Map<String, Object> searchParam = Maps.newHashMap();
+                searchParam.put("dealerName", map.get("dealerName").toString());
+                List<FutianDealerInfo> reList = futianDealerInfoService.search(searchParam);
+                FutianDealerInfo futianDealerInfo = null;
+                if (reList.size() == 1){
+                    futianDealerInfo = reList.get(0);
+                    futianDealerInfo.setCarType(StringUtils.isEmpty(futianDealerInfo.getCarType())? carType+";": futianDealerInfo.getCarType().indexOf(carType+";") == -1? futianDealerInfo.getCarType()+carType+";": futianDealerInfo.getCarType());
+                    futianDealerInfoService.update(futianDealerInfo);
+                }
+                if(reList.size() == 0){
+                    futianDealerInfo = new FutianDealerInfo();
+                    System.out.println("======= 经销商不存在 ===="+map.get("dealerName"));
+                    futianDealerInfo.setCarType(carType + ";");
+                    futianDealerInfo.setDealerName(map.get("dealerName").toString());
+                    futianDealerInfo.setAddress(map.get("address").toString());
+                    futianDealerInfo.setTel(map.get("tel").toString());
+                    Map<String, Object> searchParam1 = Maps.newHashMap();
+                    searchParam1.put("province", map.get("province").toString());
+                    List<FutianProvince> fp = futianProvinceService.search(searchParam1);
+                    FutianProvince sfp = null;
+                    if (fp.size() == 1){
+                        sfp = fp.get(0);
+                    }
+                    if(fp.size() == 0){
+                        sfp = new FutianProvince();
+                        sfp.setProvince(map.get("province").toString());
+                        futianProvinceService.insert(sfp);
+                    }
+
+                    searchParam1.put("city", map.get("city").toString());
+                    List<FutianCity> fc = futianCityService.search(searchParam1);
+                    FutianCity sfc = null;
+                    if (fc.size() == 1){
+                        sfc = fc.get(0);
+                    }
+                    if(fc.size() == 0){
+                        sfc = new FutianCity();
+                        sfc.setProvinceId(sfp.getId());
+                        sfc.setCity(map.get("city").toString());
+                        futianCityService.insert(sfc);
+                    }
+                    futianDealerInfo.setClientCity(sfc.getId());
+                    futianDealerInfo.setProvince(sfp.getId());
+                    futianDealerInfo.setCity(sfc.getId());
+                    futianDealerInfoService.insert(futianDealerInfo);
+                }
+            }
+
+
+        }
+        return null;
     }
 }

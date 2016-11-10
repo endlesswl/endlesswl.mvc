@@ -13,10 +13,11 @@ public class FutianDealerInfo {
 	public static final String ALIAS_TEL = "tel";
 	public static final String ALIAS_ADDRESS = "address";
 	public static final String ALIAS_CODE_URL = "codeUrl";
+	public static final String ALIAS_CAR_TYPE = "carType";
 	public static final String ALIAS_CREATE_TIME = "createTime";
 
 	/**
-	 * 
+	 *
 	 */
 	private Integer id;
 	/**
@@ -47,6 +48,7 @@ public class FutianDealerInfo {
 	 * äºŒç»´ç �åœ°å�€
 	 */
 	private String codeUrl;
+	private String carType;
 	/**
 	 * åˆ›å»ºæ—¶é—´
 	 */
@@ -57,63 +59,63 @@ public class FutianDealerInfo {
 	public Integer getId() {
 		return this.id;
 	}
-	
+
 	public void setId(Integer value) {
 		this.id = value;
 	}
 	public String getDealerName() {
 		return this.dealerName;
 	}
-	
+
 	public void setDealerName(String value) {
 		this.dealerName = value;
 	}
 	public Integer getProvince() {
 		return this.province;
 	}
-	
+
 	public void setProvince(Integer value) {
 		this.province = value;
 	}
 	public Integer getCity() {
 		return this.city;
 	}
-	
+
 	public void setCity(Integer value) {
 		this.city = value;
 	}
 	public Integer getClientCity() {
 		return this.clientCity;
 	}
-	
+
 	public void setClientCity(Integer value) {
 		this.clientCity = value;
 	}
 	public String getTel() {
 		return this.tel;
 	}
-	
+
 	public void setTel(String value) {
 		this.tel = value;
 	}
 	public String getAddress() {
 		return this.address;
 	}
-	
+
 	public void setAddress(String value) {
 		this.address = value;
 	}
 	public String getCodeUrl() {
 		return this.codeUrl;
 	}
-	
+
 	public void setCodeUrl(String value) {
 		this.codeUrl = value;
 	}
 	public java.util.Date getCreateTime() {
 		return this.createTime;
 	}
-	
+
 	public void setCreateTime(java.util.Date value) {
 		this.createTime = value;
 	}
@@ -124,5 +126,13 @@ public class FutianDealerInfo {
 
 	public void setClientCityName(String clientCityName) {
 		this.clientCityName = clientCityName;
+	}
+
+	public String getCarType() {
+		return carType;
+	}
+
+	public void setCarType(String carType) {
+		this.carType = carType;
 	}
 }

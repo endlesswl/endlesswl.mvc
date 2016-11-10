@@ -43,7 +43,7 @@ Signup = {
                 $(".tipp").css("visibility","visible");
                 $(".tipp").text("请您选择品牌车系信息");
                 return;
-            }else if(dealer == ''){
+            }else if(dealer ==null || dealer == ''){
                 $(".tipp").css("visibility","visible");
                 $(".tipp").text("请您选择经销商信息");
                 return;
@@ -86,11 +86,13 @@ Signup = {
         }
         $("#city").change(function(){
             var param={
-                cityId : $("#city").val()
+                cityId : $("#city").val(),
+                carType : $("#carModel").val()=='迷迪'?'':$("#carModel").val()
             };
             var data = Util.ajaxPost(Signup.ctx + '/futian/getDealer.json', param);
             var list = data.list;
             $("#dealer").html("");
+            $("#dealeradd").html("");
             for(var i = 0; i < list.length; i++){
                 $("#dealer").append("<option add='"+list[i].address+"' value='"+list[i].id+"'>"+list[i].dealerName+"</option>");
                 $("#dealeradd").html("地址："+list[i].address);
@@ -125,6 +127,20 @@ Signup = {
                     Signup.currentShowType=i;
                 }
             });
+            if($("#city").val() != ''){
+                var param={
+                    cityId : $("#city").val(),
+                    carType : $("#carModel").val()=='迷迪'?'':$("#carModel").val()
+                };
+                var data = Util.ajaxPost(Signup.ctx + '/futian/getDealer.json', param);
+                var list = data.list;
+                $("#dealer").html("");
+                $("#dealeradd").html("");
+                for(var i = 0; i < list.length; i++){
+                    $("#dealer").append("<option add='"+list[i].address+"' value='"+list[i].id+"'>"+list[i].dealerName+"</option>");
+                    $("#dealeradd").html("地址："+list[i].address);
+                }
+            }
         });
         $("#carModel").change();
     },
